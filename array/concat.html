@@ -1,0 +1,126 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: tanghao1
+ * @Date: 2021-10-29 17:20:04
+ * @LastEditors: tanghao1
+ * @LastEditTime: 2021-10-30 11:08:55
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实现Lodash的_.concat方法</title>
+</head>
+
+<body>
+  <div id='eg'>
+    <h5>_.concat方法</h5>
+    <div>_.concat(array, [values])</div>
+    <div>创建一个新数组，将array与任何数组 或 值连接在一起。</div>
+    <div>
+      var array = [1];
+      var other = _.concat(array, 2, [3], [[4]]);
+
+      console.log(other);
+      // => [1, 2, 3, [4]]
+
+      console.log(array);
+      // => [1]
+    </div>
+  </div>
+  <p>==================</p>
+  <div id='concat'>
+
+  </div>
+  <script>
+     // 需要梳理
+    //创建一个数组array的切片，从起始索引到结束索引，不包括结束索引
+    function concat() {
+      // 因为不知道一共有多少个 参数 取arguments的长度即可得知参数个数
+      var length = arguments.length;
+      // 针对于传参数为空 的话 直接返回一个 空数组
+      if (!length) {
+        return [];
+      }
+      var args = Array(length - 1), // 创建 一个跟参数长度相同的数组
+        array = arguments[0],
+        index = length;
+      while (index--) {
+        // index每减1 就让args[]对应位置等于arguments的对应位置
+        args[index - 1] = arguments[index];
+      }
+      // 返回一个将第一位array与剩下的 被拍平的数组合并(baseFlatten 就做了这么 一件事，将args中的每一项都拍平了一个层级(个人理解 [[4]] -> [4] ))
+      // 判断第一个参数是否是array 如果是的话拷贝他，如果不是的话[array]转数组
+      return arrayPush(Array.isArray(array) ? copyArray(array) : [array], baseFlatten(args, 1));
+    }
+
+    function arrayPush(array, values) {
+      var index = -1,
+        offset = array.length,
+        length = values.length;
+      // 思路：将俩个array合并 分别获取array、values的长度 将values的每一项放到array数组的末尾
+      while (++index < length) {
+        array[offset + index] = values[index];
+      }
+      return array; // 返回合并后的数组
+    }
+
+    function baseFlatten(array, depth, predicate, isStrict, result) {
+      var index = -1,
+        length = array.length;
+      // predicate || (predicate = isFlattenable); // 判断有没有predicate 没有的话就是isFlattenable(关于这个东西我暂时还不是很懂，有懂的可以评论区告诉我！！)
+     
+      result || (result = []);
+      while (++index < length) {
+        var value = array[index];
+        // depth的深度
+        // depth应该是需要拍平几层 1就是需要拍平1层 2就是2层
+        // predicate 这个方法判断了这一项是否是需要拍平的
+        // if (depth > 0 && predicate(value)) {
+          if (depth > 0 ) {
+          if (depth > 1) {
+            console.log('执行这里')
+            // concat这个方法不会进去这里
+            // 这里是递归调用拍平数组使用的
+            // Recursively flatten arrays (susceptible to call stack limits).
+            baseFlatten(value, depth - 1, predicate, isStrict, result);
+          } else {
+            // 将拍平的数组放到新数组后面
+            arrayPush(result, value);
+          }
+        } else if (!isStrict) {
+          // concat这个方法不会进去这里 暂时也没想到这个方法有什么用
+          result[result.length] = value;
+        }
+      }
+      return result;
+    }
+
+    function copyArray(source, array) {
+      // 复制一个数组出来
+      var index = -1,
+        length = source.length;
+      array || (array = Array(length));
+      while (++index < length) {
+        array[index] = source[index];
+      }
+      return array;
+    }
+    
+    
+    let tanghao = new concat([1, 2], 3, 5, [4, 5], [
+      [[7, 9]]
+    ])
+    console.log(tanghao)
+    // [1,2,3,5,4,5,[7,9]]
+    var concat = document.getElementById('concat')
+    concat.innerHTML = tanghao
+  </script>
+
+</body>
+
+</html>

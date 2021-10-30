@@ -1,0 +1,68 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: tanghao1
+ * @Date: 2021-10-29 17:20:04
+ * @LastEditors: tanghao1
+ * @LastEditTime: 2021-10-30 10:18:44
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实现Lodash的_.compact方法</title>
+</head>
+
+<body>
+  <div id='eg'>
+    <h5>_.compact方法</h5>
+    <div>_.compact(array)</div>
+    <div>创建一个新数组，包含原数组中所有的非假值元素。例如false,
+      null,0, "", undefined, 和 NaN 都是被认为是“假值”。
+    </div>
+  </div>
+  <p>==================</p>
+  <div id='demo'>
+
+  </div>
+  <script>
+    //创建一个数组array的切片，从起始索引到结束索引，不包括结束索引
+    // function compact(array) {
+    //   const relArray = []
+    //   for (let i = 0; i < array.length; i++) {
+    //     if (array[i]) {
+    //       relArray.push(array[i])
+    //     }
+    //   }
+    //   return relArray
+    // }
+
+    function compact(array) {
+      let resIndex = 0 //结果数组索引
+      const result = [] //结果数组
+
+      if (array == null) { //如果参数array为空，返回空数组
+        return result
+      }
+
+      for (const value of array) { //循环array
+        if (value) {
+          result[resIndex++] = value //如果当前值为真，就存入结果数组
+        }
+      }
+      return result
+    }
+
+
+    let tanghao = new compact([0, false, null, undefined, NaN, '', 1, 5, 67])
+    console.log(tanghao)
+    var demo = document.getElementById('demo')
+    demo.innerHTML = tanghao
+  </script>
+
+</body>
+
+</html>
