@@ -1,0 +1,22 @@
+{
+  "name": "lodash",
+  "version": "1.0.0",
+  "description": "this is a st demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanghao1194/lodash.git"
+  },
+  "author": "tanghao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tanghao1194/lodash/issues"
+  },
+  "homepage": "https://github.com/tanghao1194/lodash#readme",
+  "dependencies": {
+    "dependency": "0.0.1"
+  }
+}
